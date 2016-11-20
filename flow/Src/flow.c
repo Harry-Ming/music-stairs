@@ -4,14 +4,16 @@ int led_pwm[25];
 int led_play[25];
 int light[25];
 extern int string_show;
-
+/*
+每10ms根据键值完成预计pwm的计算
+*/
 void LightDown()
 {
 	for(int i=0;i<25;i++)
 	{
 		if(led_pwm[i] > 0)
 			led_pwm[i]--;
-		
+		/*oled显示内容切换*/
 		if(led_pwm[i] == 50)
 			{
 				if(string_show < 17)
@@ -20,11 +22,12 @@ void LightDown()
 					string_show = 0;
 			}
 		
-		
 		led_play[i] = led_pwm[i];
 	}
 }
-
+/*
+频率为100Hz 计数周期为100的 pwm 软件实现
+*/
 void Pwm2Play()
 {
 	for(int i=0;i<25;i++)
@@ -38,7 +41,9 @@ void Pwm2Play()
 			light[i] = 1;
 	}
 }
-
+/*
+引脚高低电平实现pwm
+*/
 void LightPlay()
 {
 	HAL_GPIO_WritePin(GPIOE,GPIO_PIN_15,light[0]);

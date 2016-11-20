@@ -96,6 +96,7 @@ int main(void)
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
+		/*oled屏幕随人经过而显示*/
 		LCD_P6x8Str(30,0,"Group 6");
 		switch(string_show)
 		{
@@ -308,25 +309,26 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 	{
 		/*100us interrupt timer*/
 		Time++;
-		
+		/*10ms按键检测*/
 		if(Time%100 == 0)
 		{
-//			if(Time%1000 == 0)
-//				HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_9);
-			
+			/*定时器测试*/
+			if(Time%1000 == 0)
+				HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_9);
+			/*获得键值、消抖*/
 			key_get = GetKey();
 			
 			if(GetKey() == key_get)
 				key_now = key_get;
 			else
 				key_now = key_last;
-			
+			/*计算pwm*/
 			Key2Pwm(key_now);
 			LightDown();
 
 			key_last = key_now;
 		}
-		
+		/*pwm实现*/
 		Pwm2Play();
 		LightPlay();
 		

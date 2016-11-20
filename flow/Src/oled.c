@@ -1,32 +1,4 @@
-/********************************************************   
-【平    台】龙丘K10/60DN/DX多功能开发板
-【编    写】龙丘
-【Designed】by Chiu Sir
-【E-mail  】chiusir@yahoo.cn
-【软件版本】V1.0
-【最后更新】2012年4月23日
-【相关信息参考下列地址】
-【网    站】http://www.lqist.cn
-【淘宝店铺】http://shop36265907.taobao.com
-------------------------------------------------
-【dev.env.】CodeWarrior 10.1/IAR
-【Target  】K60DX/DN
-【Crystal 】50.000Mhz
-【busclock】???.000MHz
-【pllclock】100.000MHz    
-***************************
------------------------------------------------- 
-使用说明：SD卡核心板专用程序
-OLED电源使用3.3V。   
-----------------
-G    电源地
-3.3V 接3.3V电源
-D0   PORTA_PA15  
-D1   PORTA_PA16
-RST  PORTA_PA13 
-DC   PORTA_PA12
-CS   已接地，不用接  
-*********************************************************/
+/*基于北京龙邱科技k60 oled底层库文件移植*/
 #include "OLED.h"
 #include <stdarg.h>
 
@@ -36,29 +8,6 @@ CS   已接地，不用接
 #define Max_Column	128
 #define Max_Row		  64
 #define	Brightness	0xCF 
-
-/*
-4线SPI使用说明：
-VBT 供内部DC-DC电压，3.3~4.3V，如果使用5V电压，为保险起见串一个100~500欧的电阻
-VCC 供内部逻辑电压 1.8~6V   
-GND 地
-
-BS0 低电平
-BS1 低电平
-BS2 低电平
-
-CS  片选管脚
-DC  命令数据选择管脚
-RES 模块复位管脚 
-D0（SCLK） ，时钟脚，由MCU控制
-D1（MOSI） ，主输出从输入数据脚，由MCU控制
-
-D2 悬空      
-D3-D7 ， 低电平 ， 也可悬空，但最好设为低电平
-RD  低电平 ，也可悬空，但最好设为低电平
-RW  低电平 ，也可悬空，但最好设为低电平
-RD  低电平 ，也可悬空，但最好设为低电平   
-*/
 
 #define X_WIDTH 128
 #define Y_WIDTH 64

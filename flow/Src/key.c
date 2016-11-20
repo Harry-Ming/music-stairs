@@ -33,7 +33,9 @@ int GetKey()
 
 	return key_code;
 }
-
+/*
+未离开按键时，保持常亮
+*/
 void Key2Pwm(int key_code)
 {
 	int key[10];

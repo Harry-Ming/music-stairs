@@ -9,21 +9,6 @@
 #define RST_OUT PCout(4)
 #define DC_OUT  PAout(9)
 
-//#define D0      PTC12
-//#define D1      PTC13
-//#define RST     PTC14
-//#define DC      PTC15
-
-//#define D0_DDR  DDRC12
-//#define D1_DDR  DDRC13
-//#define RST_DDR DDRC14
-//#define DC_DDR  DDRC15
-//
-//#define D0_GPIO     PORTC->PCR[12]
-//#define D1_GPIO     PORTC->PCR[13]
-//#define RST_GPIO    PORTC->PCR[14]
-//#define DC_GPIO     PORTC->PCR[15]
-
 void OLED_Init(void);
 void LCD_CLS(void);
 void LCD_ClearLine(u8 y);
