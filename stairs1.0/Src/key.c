@@ -1,7 +1,7 @@
 #include "key.h"
 
 /*
-获得当前键值
+获得当前键值，使用二进制表示
 */
 int GetKey()
 {
@@ -33,7 +33,9 @@ int GetKey()
 
 	return key_code;
 }
-
+/*
+只要有新按键按下时就响应，返回按键十进制编码，1ms内同时多按键触发，则优先只响应第一个
+*/
 int KeyPush()
 {
 	key_push = (key_last | key_now) - key_last;
@@ -63,7 +65,7 @@ int KeyPush()
 	else 
 		return 0;
 }
-
+/*根据键值控制灯光*/
 void Key2Light()
 {
 	int light;

@@ -93,10 +93,7 @@ int main(void)
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
-//	HAL_GPIO_WritePin(GPIOC,GPIO_PIN_13,GPIO_PIN_SET);
-//	HAL_Delay(1000);
-//	HAL_GPIO_WritePin(GPIOC,GPIO_PIN_13,GPIO_PIN_RESET);
-//	HAL_Delay(1000);
+
   }
   /* USER CODE END 3 */
 
@@ -252,9 +249,11 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
    */
 	if (htim->Instance == htim2.Instance)
 	{	
+		/*测试1ms定时*/
 		HAL_GPIO_TogglePin(GPIOC,GPIO_PIN_13);
+		/*按键获取*/
 		key_get = GetKey();
-		
+		/*按键消抖*/
 		for(int i=10;i>0;i--)
 			for(int j=10;j>0;j--);
 		
@@ -262,31 +261,36 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 			key_now = key_get;
 		else
 			key_now = key_last;
-		
+		/*键值变化则触发效果*/
 		if(key_now != key_last)
 		{
+			/*led控制*/
 			Key2Light();
-			
+			/*音乐模式切换*/
 			if(HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_9))
 			{
+				/*歌曲模式*/
 				PlaySound(KeyPush());
 				touch_times = 0;
 			}
 			else
+				/*音阶模式*/
 				PlayMusic(song1);
 		}
+		/*更新键值*/
 		key_last = key_now;
 	}
 }
 
 void init_all()
 {
+	/*初始化音频解码模块*/
 	HAL_GPIO_WritePin(GPIOB,GPIO_PIN_4,GPIO_PIN_SET);
 	HAL_GPIO_WritePin(GPIOB,GPIO_PIN_5,GPIO_PIN_SET);
 	HAL_GPIO_WritePin(GPIOB,GPIO_PIN_6,GPIO_PIN_SET);
 	HAL_GPIO_WritePin(GPIOB,GPIO_PIN_7,GPIO_PIN_SET);
 	HAL_GPIO_WritePin(GPIOB,GPIO_PIN_8,GPIO_PIN_SET);
-	
+	/*初始化楼梯上led灯*/
 	HAL_GPIO_WritePin(GPIOA,GPIO_PIN_12,GPIO_PIN_SET);
 	HAL_GPIO_WritePin(GPIOA,GPIO_PIN_11,GPIO_PIN_SET);
 	HAL_GPIO_WritePin(GPIOA,GPIO_PIN_10,GPIO_PIN_SET);
@@ -296,9 +300,11 @@ void init_all()
 	HAL_GPIO_WritePin(GPIOB,GPIO_PIN_14,GPIO_PIN_SET);
 	HAL_GPIO_WritePin(GPIOB,GPIO_PIN_13,GPIO_PIN_SET);
 	HAL_GPIO_WritePin(GPIOB,GPIO_PIN_12,GPIO_PIN_SET);
-	
+	/*初始化按键状态*/
 	key_last = key_now = key_get = touch_times = 0;
+	/*开启1ms定时器*/
 	HAL_TIM_Base_Start_IT(&htim2);
+	/*配置歌曲初始化*/
 	SongInit();
 }
 /* USER CODE END 4 */

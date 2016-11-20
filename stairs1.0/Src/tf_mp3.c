@@ -1,5 +1,5 @@
 #include "tf_mp3.h"
-
+/*播放不同顺序文件的引脚配置数组*/
 char sound0[] = {1,1,1,1,1};
 char sound1[] = {1,1,1,1,0};
 char sound2[] = {1,1,1,0,1};
@@ -15,7 +15,7 @@ char sound11[] = {0,1,0,1,1};
 
 SONG_STRUCT song1;
 int touch_times;
-
+/*根据按键十进制编码发出声响*/
 void PlaySound(int num)
 {
 	switch (num)
@@ -34,7 +34,7 @@ void PlaySound(int num)
 		default :TfMp3Out(sound0);break;
 	}
 }
-
+/*配置歌曲音调和长度*/
 void SongInit()
 {
 	song1.lenth = 43;
@@ -88,16 +88,17 @@ void SongInit()
 	song1.song[41] = 2;
 	song1.song[42] = 1;
 }
-
+/*根据按键数量的累加播放预存歌曲*/
 void PlayMusic(SONG_STRUCT song)
 {
 	if(KeyPush() > 0)
 	{
+		/*播放完成后重复播放*/
 		if(touch_times < song.lenth)
 			touch_times ++;
 		else
 			touch_times = 0;
-		
+		/*连音时插入停止，保证两个音分离*/
 		if(song.song[touch_times] == song.song[touch_times-1])
 			PlaySound(song.song[0]);
 		
@@ -106,7 +107,7 @@ void PlayMusic(SONG_STRUCT song)
 	else
 		PlaySound(song.song[0]);
 }
-
+/*控制引脚，播放mp3文件*/
 void TfMp3Out(char *val)
 {
 	HAL_GPIO_WritePin(GPIOB,GPIO_PIN_4,val[4]);
